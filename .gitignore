@@ -10,7 +10,6 @@ parts
 src
 develop-eggs
 build
-docs
 dist
 sphinx
 db.sql3
