@@ -28,11 +28,11 @@ from .models import *
 def read_all_eyes(directory, sub_dirs = ('FRONTAL', 'POSE')):
   """Scans the image directories for files containing the hand-labeled eye positions, reads them and stores everything in one huge dictionary"""
   # scan for the directories, where we expect images
-  all_sub_dirs = [[sub_dir, s] for sub_dir in sub_dirs for s in os.listdir(os.path.join(directory, sub_dir)) if os.path.isdir(os.path.join(directory, subdir, s))]
+  all_sub_dirs = [[sub_dir, s] for sub_dir in sub_dirs for s in os.listdir(os.path.join(directory, sub_dir)) if os.path.isdir(os.path.join(directory, sub_dir, s))]
 
   # read eye positions
   eyes = {}
-  for sub_dirs in all_sub_dirs
+  for sub_dirs in all_sub_dirs:
     # eye position file
     eyes_file = os.path.join(directory, *(sub_dirs + ["FaceFP_2.txt"]))
     with open(eyes_file) as f:
