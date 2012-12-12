@@ -48,7 +48,7 @@ class CasPealDatabaseTest(unittest.TestCase):
     db = xbob.db.caspeal.Database()
 
     # test that the objects() function returns reasonable numbers of files
-    self.assertEqual(len(db.objects()), 31064)
+    self.assertEqual(len(db.objects()), 31064 if db.has_protocol('pose') else 9232)
 
     # number of world files for the two genders
     self.assertEqual(len(db.objects(groups='world')), 1200)
@@ -73,9 +73,10 @@ class CasPealDatabaseTest(unittest.TestCase):
     #self.assertEqual(len(db.objects(groups='dev', purposes='probe', protocol='pose')), 4998+4993+4998)
     # On the web-page they claim to have 21840 pose images (3 elevations * 7 azimuth * 1040 people)
     # but it seems that we ar missing some files...
-    self.assertEqual(len(db.objects(groups='dev', purposes='probe', protocol='pose')), 21832)
-    # all pose images have neutral expression, frontal light, no accessoriesm the same distance, were taken at the same session with the same background
-    self.assertEqual(len(db.objects(groups='dev', purposes='probe', protocol='pose', expressions='N', lightings='EU+00', accessories=0, distances=0, sessions=0, backgrounds='B')), 21832)
+    if db.has_protocol('pose'):
+      self.assertEqual(len(db.objects(groups='dev', purposes='probe', protocol='pose')), 21832)
+      # all pose images have neutral expression, frontal light, no accessoriesm the same distance, were taken at the same session with the same background
+      self.assertEqual(len(db.objects(groups='dev', purposes='probe', protocol='pose', expressions='N', lightings='EU+00', accessories=0, distances=0, sessions=0, backgrounds='B')), 21832)
 
 
   def test03_annotations(self):

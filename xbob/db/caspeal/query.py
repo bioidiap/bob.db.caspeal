@@ -313,3 +313,19 @@ class Database(xbob.db.verification.utils.SQLiteDatabase):
     # return annotations as obtained from the __call__ command of the Annotation class
     return annotation()
 
+
+  def protocol_names(self):
+    """Returns all registered protocol names"""
+    return [str(p.name) for p in self.protocols()]
+
+
+  def protocols(self):
+    """Returns all registered protocols"""
+    return list(self.query(Protocol))
+
+
+  def has_protocol(self, name):
+    """Tells if a certain protocol is available"""
+    return self.query(Protocol).filter(Protocol.name==name).count() != 0
+
+

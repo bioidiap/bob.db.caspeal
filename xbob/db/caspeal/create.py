@@ -43,7 +43,7 @@ def read_all_eyes(directory, sub_dirs = ('FRONTAL', 'POSE')):
         eyes["\\".join(sub_dirs + splits[:1])] = [int(p) for p in splits[1:]]
   return eyes
 
-def add_all_elements(session, directory, extension):
+def add_all_elements(session, directory, extension, add_pose, verbose):
   """Adds the clients, the files and the protocols of the CAS-PEAL database."""
   list_files = {
       'training'  : os.path.join(directory, "Evaluation Prototype", "Training Set", "Training Set.txt"),
@@ -60,13 +60,16 @@ def add_all_elements(session, directory, extension):
 
   # create clients (all clients are enrolled, i.e., contained in the gallery list)
   with open(list_files['gallery']) as f:
+    if verbose: print "Adding clients ..."
     for line in f:
       splits = line.split("\\")[-1].split("_")
+      if verbose>1: print "  Adding client '%s'" % Client(splits[0], splits[1]).id
       session.add(Client(splits[0], splits[1]))
 
   # create files and protocols
   eyes = read_all_eyes(directory)
   for protocol in list_files:
+    if verbose: print "Adding protocol '%s'" % protocol
     # create protocol
     p = Protocol(protocol)
     # add it to the session and make it get an id
@@ -77,11 +80,13 @@ def add_all_elements(session, directory, extension):
     with open(list_files[protocol]) as f:
       for line in f:
         file = File(line.strip(), p)
+        if verbose>1: print "  Adding file '%s'" % file.path,
         # make the file get an id
         session.add(file)
         session.flush()
         session.refresh(file)
         # add annotations for the file
+        if verbose>1: print "with annotations '%s'" % eyes[line.strip()]
         session.add(Annotation(file.id, eyes[line.strip()]))
 
   # create pose protocol
@@ -89,23 +94,27 @@ def add_all_elements(session, directory, extension):
   # pose images are not listed, but instead we use all pose images
   # THIS ALSO MEANS, THERE IS NO TRAINING IMAGES FOR POSE!
   # additionally, the poses differ between subjects: most have a poses (0, +-15, +-30, +-45), but some have (0, +-22, +-45, +-66)
-  p = Protocol('pose')
-  # add it to the session and make it get an id
-  session.add(p)
-  session.flush()
-  session.refresh(p)
-  # get directories
-  pose_sub_dirs = [['POSE', s] for s in os.listdir(os.path.join(directory, 'POSE')) if os.path.isdir(os.path.join(directory, 'POSE', s))]
-  for sub_dirs in pose_sub_dirs:
-    sub_dir = os.path.join(directory, *sub_dirs)
-    files = [f for f in os.listdir(sub_dir) if os.path.isfile(os.path.join(sub_dir,f)) and os.path.splitext(f)[1] == extension]
-    for f in files:
-      file_in_dir = "\\".join(sub_dirs + [os.path.splitext(f)[0]])
-      file = File(file_in_dir, p)
-      session.add(file)
-      session.flush()
-      session.refresh(file)
-      session.add(Annotation(file.id, eyes[file_in_dir]))
+  if add_pose:
+    p = Protocol('pose')
+    if verbose: print "Adding 'pose' protocol"
+    # add it to the session and make it get an id
+    session.add(p)
+    session.flush()
+    session.refresh(p)
+    # get directories
+    pose_sub_dirs = [['POSE', s] for s in os.listdir(os.path.join(directory, 'POSE')) if os.path.isdir(os.path.join(directory, 'POSE', s))]
+    for sub_dirs in pose_sub_dirs:
+      sub_dir = os.path.join(directory, *sub_dirs)
+      files = [f for f in os.listdir(sub_dir) if os.path.isfile(os.path.join(sub_dir,f)) and os.path.splitext(f)[1] == extension]
+      for f in files:
+        file_in_dir = "\\".join(sub_dirs + [os.path.splitext(f)[0]])
+        file = File(file_in_dir, p)
+        if verbose>1: print "  Adding file '%s'" % file.path,
+        session.add(file)
+        session.flush()
+        session.refresh(file)
+        if verbose>1: print "with annotations '%s'" % eyes[file_in_dir]
+        session.add(Annotation(file.id, eyes[file_in_dir]))
 
 
 def create_tables(args):
@@ -139,8 +148,8 @@ def create(args):
 
   # the real work...
   create_tables(args)
-  s = session_try_nolock(args.type, args.files[0], echo=(args.verbose >= 2))
-  add_all_elements(s, args.directory, args.extension)
+  s = session_try_nolock(args.type, args.files[0], echo=(args.verbose > 2))
+  add_all_elements(s, args.directory, args.extension, args.poses, args.verbose)
   s.commit()
   s.close()
 
@@ -149,9 +158,10 @@ def add_command(subparsers):
 
   parser = subparsers.add_parser('create', help=create.__doc__)
 
-  parser.add_argument('-R', '--recreate', action='store_true', help="If set, I'll first erase the current database")
-  parser.add_argument('-v', '--verbose', action='count', help='Do SQL operations in a verbose way')
-  parser.add_argument('-D', '--directory', metavar='DIR', default="/idiap/resource/database/CAS-PEAL", help="The path to the CAS-PEAL database")
-  parser.add_argument('--extension', metavar='STR', default='.tif', help="The file extension of the image files from the CAS-PEAL face database")
+  parser.add_argument('-R', '--recreate', action='store_true', help='If set, I\'ll first erase the current database')
+  parser.add_argument('-v', '--verbose', action='count', help='Do SQL operations in a verbose way?')
+  parser.add_argument('-p', '--poses', action='store_true', help='Shall the pose files also be added?')
+  parser.add_argument('-D', '--directory', metavar='DIR', default='/idiap/resource/database/CAS-PEAL', help='The path to the CAS-PEAL database')
+  parser.add_argument('--extension', metavar='STR', default='.tif', help='The file extension of the image files from the CAS-PEAL face database')
 
   parser.set_defaults(func=create) #action
