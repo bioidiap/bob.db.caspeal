@@ -98,4 +98,6 @@ class CasPealDatabaseTest(unittest.TestCase):
     self.assertEqual(main('caspeal dumplist --self-test'.split()), 0)
     self.assertEqual(main('caspeal dumplist  --group=dev --purpose=enrol --client=622 --protocol=aging --session=0 --gender=F --expression=N --lighting=EU+00 --pose=M+00 --distance=0 --accessory=0 --age=Y --background=B --self-test'.split()), 0)
     self.assertEqual(main('caspeal checkfiles --self-test'.split()), 0)
+    self.assertEqual(main('caspeal reverse FRONTAL/Aging/MY_000064_IEU+00_PM+00_EN_A0_D0_T2_BB_M0_R1_S0 --self-test'.split()), 0)
+    self.assertEqual(main('caspeal path 42 --self-test'.split()), 0)
 
