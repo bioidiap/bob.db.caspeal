@@ -60,16 +60,16 @@ def add_all_elements(session, directory, extension, add_pose, verbose):
 
   # create clients (all clients are enrolled, i.e., contained in the gallery list)
   with open(list_files['gallery']) as f:
-    if verbose: print "Adding clients ..."
+    if verbose: print("Adding clients ...")
     for line in f:
       splits = line.split("\\")[-1].split("_")
-      if verbose>1: print "  Adding client '%s'" % Client(splits[0], splits[1]).id
+      if verbose>1: print("  Adding client '%s'" % Client(splits[0], splits[1]).id)
       session.add(Client(splits[0], splits[1]))
 
   # create files and protocols
   eyes = read_all_eyes(directory)
   for protocol in list_files:
-    if verbose: print "Adding protocol '%s'" % protocol
+    if verbose: print("Adding protocol '%s'" % protocol)
     # create protocol
     p = Protocol(protocol)
     # add it to the session and make it get an id
@@ -80,13 +80,13 @@ def add_all_elements(session, directory, extension, add_pose, verbose):
     with open(list_files[protocol]) as f:
       for line in f:
         file = File(line.strip(), p)
-        if verbose>1: print "  Adding file '%s'" % file.path,
+        if verbose>1: print("  Adding file '%s'" % file.path, end=' ')
         # make the file get an id
         session.add(file)
         session.flush()
         session.refresh(file)
         # add annotations for the file
-        if verbose>1: print "with annotations '%s'" % eyes[line.strip()]
+        if verbose>1: print("with annotations '%s'" % eyes[line.strip()])
         session.add(Annotation(file.id, eyes[line.strip()]))
 
   # create pose protocol
@@ -96,7 +96,7 @@ def add_all_elements(session, directory, extension, add_pose, verbose):
   # additionally, the poses differ between subjects: most have a poses (0, +-15, +-30, +-45), but some have (0, +-22, +-45, +-66)
   if add_pose:
     p = Protocol('pose')
-    if verbose: print "Adding 'pose' protocol"
+    if verbose: print("Adding 'pose' protocol")
     # add it to the session and make it get an id
     session.add(p)
     session.flush()
@@ -109,11 +109,11 @@ def add_all_elements(session, directory, extension, add_pose, verbose):
       for f in files:
         file_in_dir = "\\".join(sub_dirs + [os.path.splitext(f)[0]])
         file = File(file_in_dir, p)
-        if verbose>1: print "  Adding file '%s'" % file.path,
+        if verbose>1: print("  Adding file '%s'" % file.path, end=' ')
         session.add(file)
         session.flush()
         session.refresh(file)
-        if verbose>1: print "with annotations '%s'" % eyes[file_in_dir]
+        if verbose>1: print("with annotations '%s'" % eyes[file_in_dir])
         session.add(Annotation(file.id, eyes[file_in_dir]))
 
 

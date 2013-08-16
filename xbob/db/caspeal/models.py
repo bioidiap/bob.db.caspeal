@@ -108,9 +108,9 @@ class File(Base, xbob.db.verification.utils.File):
   lighting_azimuth_choices = ('-90', '-45', '+00', '+45', '+90')  # for both pose and lighting
   pose_azimuth_choices = ('-90', '-67', '-45', '-30', '-22', '-15', '+00', '+15', '+22', '+30', '+45', '+67', '+90')  # for both pose and lighting
   expression_choices = ('N', 'L', 'F', 'S', 'C', 'O') # ('neutral', 'laughing', 'frowning', 'surprising', 'eyes_closed', 'mouth_open')
-  distance_choices = range(3)
-  accessory_choices = range(7) # ('none', 'hat_1', 'hat_2', 'hat_3', 'glasses_1', 'glasses_2', 'glasses_3')
-  session_choices = range(3) # ('first', 'second', 'third')
+  distance_choices = list(range(3))
+  accessory_choices = list(range(7)) # ('none', 'hat_1', 'hat_2', 'hat_3', 'glasses_1', 'glasses_2', 'glasses_3')
+  session_choices = list(range(3)) # ('first', 'second', 'third')
   background_choices = ('B', 'R', 'D', 'Y', 'W') #('blue', 'red', 'dark', 'yellow', 'white')
 
   lighting_choices = ["%s%s%s"%(t,e,a) for t in lighting_type_choices for e in elevation_choices for a in lighting_azimuth_choices] # not all these illuminations really exist
