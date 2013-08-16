@@ -99,6 +99,8 @@ class File(Base, xbob.db.verification.utils.File):
   * the client id
   * the path
   """
+  import itertools
+
   __tablename__ = 'file'
 
   # We define the possible values for the member variables as STATIC class variables
@@ -113,8 +115,8 @@ class File(Base, xbob.db.verification.utils.File):
   session_choices = list(range(3)) # ('first', 'second', 'third')
   background_choices = ('B', 'R', 'D', 'Y', 'W') #('blue', 'red', 'dark', 'yellow', 'white')
 
-  lighting_choices = ["%s%s%s"%(t,e,a) for t in lighting_type_choices for e in elevation_choices for a in lighting_azimuth_choices] # not all these illuminations really exist
-  pose_choices = ["%s%s"%(e,a) for e in elevation_choices for a in pose_azimuth_choices] # maybe, not all of these poses exists
+  lighting_choices = ["%s%s%s"%(t,e,a) for (t,e,a) in itertools.product(lighting_type_choices, elevation_choices, lighting_azimuth_choices)] # not all these illuminations really exist
+  pose_choices = ["%s%s"%(e,a) for (e,a) in itertools.product(elevation_choices, pose_azimuth_choices)] # maybe, not all of these poses exists
 
   id = Column(Integer, primary_key=True)
   path = Column(String(100), unique=False) # << NOTE: some files's are used in several lists (training  and  enrol or probe). Hence, unfortunately, the paths are NOT UNIQUE
