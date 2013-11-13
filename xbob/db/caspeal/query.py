@@ -37,9 +37,9 @@ class Database(xbob.db.verification.utils.SQLiteDatabase):
   and for the data itself inside the database.
   """
 
-  def __init__(self):
+  def __init__(self, original_directory = None, original_extension = '.tif'):
     # call base class constructor
-    xbob.db.verification.utils.SQLiteDatabase.__init__(self, SQLITE_FILE, File)
+    xbob.db.verification.utils.SQLiteDatabase.__init__(self, SQLITE_FILE, File, original_directory=original_directory, original_extension=original_extension)
 
     # defines valid entries for various parameters
     self.m_groups  = ('world', 'dev') # no eval
@@ -207,7 +207,7 @@ class Database(xbob.db.verification.utils.SQLiteDatabase):
 
     accessories
       One or several accessories from (0, 1, 2, 3, 4, 5, 6).
-      If not specified, objects of all accessoriss are returned.
+      If not specified, objects of all accessories are returned.
       Note: this field is ignored for purpose 'enrol'.
 
     distances
