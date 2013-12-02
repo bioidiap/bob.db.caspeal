@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 setup(
 
     name='xbob.db.caspeal',
-    version='1.1.1',
+    version='1.1.2a0',
     description='CAS-PEAL Database Access API for Bob',
     url='http://github.com/bioidiap/xbob.db.caspeal',
     license='GPLv3',
