@@ -32,6 +32,7 @@ class CasPealDatabaseTest(unittest.TestCase):
     db = xbob.db.caspeal.Database()
 
     # test that the expected number of clients is returned
+    self.assertEqual(len(db.groups()), 2)
     self.assertEqual(len(db.client_ids()), 1040)
     self.assertEqual(len(db.client_ids(genders='M')), 595)
     self.assertEqual(len(db.client_ids(genders='F')), 445)
