@@ -55,6 +55,17 @@ class Database(xbob.db.verification.utils.SQLiteDatabase):
     self.m_backgrounds = File.background_choices
     self.m_protocols = Protocol.protocol_choices[2:]
 
+  def groups(self, protocol=None):
+    """Returns a list of groups for the given protocol
+
+    Keyword Parameters:
+
+    protocol
+      Ignored since groups are identical for all protocols.
+
+    Returns: a list of groups
+    """
+    return self.m_groups
 
   def clients(self, groups=None, genders=None, ages=None, protocol=None):
     """Returns a list of Client objects for the specific query by the user.
