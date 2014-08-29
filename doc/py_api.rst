@@ -6,4 +6,4 @@
  CAS-PEAL Database
 ===================
 
-.. automodule:: xbob.db.caspeal
+.. automodule:: bob.db.caspeal

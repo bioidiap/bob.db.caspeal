@@ -22,12 +22,12 @@
 
 import sqlalchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, or_, and_, not_
-from bob.db.sqlalchemy_migration import Enum, relationship
+from bob.db.base.sqlalchemy_migration import Enum, relationship
 from sqlalchemy.orm import backref
 from sqlalchemy.ext.declarative import declarative_base
 import os
 
-import xbob.db.verification.utils
+import bob.db.verification.utils
 
 Base = declarative_base()
 
@@ -85,7 +85,7 @@ class Annotation(Base):
     return "<Annotation('%s': 'reye'=%dx%d, 'leye'=%dx%d)>" % (self.file_id, self.re_y, self.re_x, self.le_y, self.le_x)
 
 
-class File(Base, xbob.db.verification.utils.File):
+class File(Base, bob.db.verification.utils.File):
   """Information about the files of the CAS-PEAL face database. Each file includes
 
   * the session
@@ -159,7 +159,7 @@ class File(Base, xbob.db.verification.utils.File):
     # client id
     client_id = int(splits[1])
     # call base class constructor
-    xbob.db.verification.utils.File.__init__(self, client_id = client_id, path = path)
+    bob.db.verification.utils.File.__init__(self, client_id = client_id, path = path)
 
     # lighting
     assert splits[2][0] == 'I'

@@ -9,10 +9,10 @@ from setuptools import setup, find_packages
 # parameters that define our package.
 setup(
 
-    name='xbob.db.caspeal',
-    version='1.1.2a0',
+    name='bob.db.caspeal',
+    version='2.0.0a0',
     description='CAS-PEAL Database Access API for Bob',
-    url='http://github.com/bioidiap/xbob.db.caspeal',
+    url='http://github.com/bioidiap/bob.db.caspeal',
     license='GPLv3',
     author='Manuel Guenther',
     author_email='manuel.guenther@idiap.ch',
@@ -25,26 +25,26 @@ setup(
 
     install_requires=[
       'setuptools',
-      'bob',  # base signal proc./machine learning library
-      'xbob.db.verification.utils>=0.1.4' # defines a set of utilities for face verification databases like this one.
+      'bob.db.base',
+      'bob.db.verification.utils' # defines a set of utilities for face verification databases like this one.
     ],
 
     namespace_packages = [
-      'xbob',
-      'xbob.db',
-      ],
+      'bob',
+      'bob.db',
+    ],
 
     entry_points = {
       # bob database declaration
       'bob.db': [
-        'caspeal = xbob.db.caspeal.driver:Interface',
-        ],
+        'caspeal = bob.db.caspeal.driver:Interface',
+      ],
 
       # bob unittest declaration
       'bob.test': [
-        'caspeal = xbob.db.caspeal.test:CasPealDatabaseTest',
-        ],
-      },
+        'caspeal = bob.db.caspeal.test:CasPealDatabaseTest',
+      ],
+    },
 
     classifiers = [
       'Development Status :: 4 - Beta',
@@ -55,5 +55,5 @@ setup(
       'Programming Language :: Python :: 3',
       'Topic :: Scientific/Engineering :: Artificial Intelligence',
       'Topic :: Database :: Front-Ends',
-      ],
+    ],
 )
