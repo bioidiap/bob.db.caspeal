@@ -22,7 +22,7 @@
 
   The CAS-PEAL database consists of several ten thousand images of Chinese people (CAS = Chinese Academy of Science).
   Overall, there are 1040 identities contained in the database.
-  For these identities, images with different `P`ose, `E`xpression, `A`ging and `L`ighting (PEAL) conditions, as well as accessories, image backgrounds and camera distances are provided.
+  For these identities, images with different Pose, Expression, Aging and Lighting (PEAL) conditions, as well as accessories, image backgrounds and camera distances are provided.
 
   Included in the database, there are file lists defining identification experiments.
   All the experiments rely on a gallery that consists of the frontal and frontally illuminated images with neutral expression and no accessories.
