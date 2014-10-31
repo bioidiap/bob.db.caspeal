@@ -18,22 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """This is the Bob database entry for the CAS-PEAL database.
-  The database itself can be downloaded from http://www.jdl.ac.cn/peal/index.html, and the data is not provided in this interface.
-
-  The CAS-PEAL database consists of several ten thousand images of Chinese people (CAS = Chinese Academy of Science).
-  Overall, there are 1040 identities contained in the database.
-  For these identities, images with different Pose, Expression, Aging and Lighting (PEAL) conditions, as well as accessories, image backgrounds and camera distances are provided.
-
-  Included in the database, there are file lists defining identification experiments.
-  All the experiments rely on a gallery that consists of the frontal and frontally illuminated images with neutral expression and no accessories.
-  For each of the variations, probe sets including exactly that variation are available.
-
-  The training set consists of a subset of the frontal images (some images are both in the training and in the development set).
-  This also means that there is no training set defined for the pose images.
-  Additionally, the database defines only a development set, but no test set.
 """
 
 from .query import Database
+from .models import Client, File, Annotation, Protocol
 
 def get_config():
   """Returns a string containing the configuration information.

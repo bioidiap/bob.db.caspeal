@@ -43,7 +43,7 @@ class Database(bob.db.verification.utils.SQLiteDatabase):
 
     # defines valid entries for various parameters
     self.m_groups  = ('world', 'dev') # no eval
-    self.m_purposes = ('enrol', 'probe')
+    self.m_purposes = ('enroll', 'probe')
     self.m_genders = Client.gender_choices
     self.m_ages = Client.age_choices
     self.m_lightings = File.lighting_choices
@@ -182,10 +182,10 @@ class Database(bob.db.verification.utils.SQLiteDatabase):
     protocol
       One of the CAS-PEAL protocols ('accessory', 'aging', 'background', 'distance', 'expression', 'lighting', 'pose').
       Note: this field is ignored for group 'world'.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     purposes
-      One or several purposes for which files should be retrieved ('enrol', 'probe').
+      One or several purposes for which files should be retrieved ('enroll', 'probe').
       Note: this field is ignored for group 'world'.
 
     model_ids
@@ -203,38 +203,38 @@ class Database(bob.db.verification.utils.SQLiteDatabase):
     lightings
       One or several of the possible lightings (e.g. 'EU+00' or 'FM-45').
       If not specified, objects of all lightings will be returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     poses
       One or several of the possible poses (e.g. 'M+00', 'U-67').
       If not specified, objects of all poses are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
       Note: for group 'world', only pose 'M+00' is available.
 
     expressions
       One or several expressions from ('N', 'L', 'F', 'S', 'C', 'O').
       If not specified, objects of all expressions are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     accessories
       One or several accessories from (0, 1, 2, 3, 4, 5, 6).
       If not specified, objects of all accessories are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     distances
       One or several distances from (0, 1, 2).
       If not specified, objects of all distances are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     sessions
       One or several sessions from (0, 1, 2).
       If not specified, objects of all sessions are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
 
     backgrounds
       One or several backgrounds from ('B', 'R', 'D', 'Y', 'W').
       If not specified, objects of all backgrounds are returned.
-      Note: this field is ignored for purpose 'enrol'.
+      Note: this field is ignored for purpose 'enroll'.
     """
 
     # check that every parameter is as expected
@@ -291,12 +291,12 @@ class Database(bob.db.verification.utils.SQLiteDatabase):
       )
 
     if 'dev' in groups:
-      if 'enrol' in purposes:
+      if 'enroll' in purposes:
         queries.append(
           _filter_models(
             _filter_some(
               self.query(File).join(Client)\
-                  .filter(File.purpose == 'enrol')\
+                  .filter(File.purpose == 'enroll')\
             )
           )
         )

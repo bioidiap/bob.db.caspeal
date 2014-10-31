@@ -104,7 +104,7 @@ class File(Base, bob.db.verification.utils.File):
   __tablename__ = 'file'
 
   # We define the possible values for the member variables as STATIC class variables
-  purpose_choices = ('world', 'enrol', 'probe')
+  purpose_choices = ('world', 'enroll', 'probe')
   lighting_type_choices = ('E', 'F', 'L') # ('ambient', 'fluorescent', 'incandescent')
   elevation_choices = ('U', 'M', 'D') # for both pose and lighting
   lighting_azimuth_choices = ('-90', '-45', '+00', '+45', '+90')  # for both pose and lighting
@@ -119,7 +119,7 @@ class File(Base, bob.db.verification.utils.File):
   pose_choices = ["%s%s"%(e,a) for (e,a) in itertools.product(elevation_choices, pose_azimuth_choices)] # maybe, not all of these poses exists
 
   id = Column(Integer, primary_key=True)
-  path = Column(String(100), unique=False) # << NOTE: some files's are used in several lists (training  and  enrol or probe). Hence, unfortunately, the paths are NOT UNIQUE
+  path = Column(String(100), unique=False) # << NOTE: some files's are used in several lists (training  and  enroll or probe). Hence, unfortunately, the paths are NOT UNIQUE
   client_id = Column(Integer, ForeignKey('client.id'))
   protocol_id = Column(Integer, ForeignKey('protocol.id'))
 
@@ -145,7 +145,7 @@ class File(Base, bob.db.verification.utils.File):
     # set protocol id
     self.protocol_id = protocol.id
     # set purpose
-    self.purpose = 'world' if protocol.name == 'training' else 'enrol' if protocol.name == 'gallery' else 'probe'
+    self.purpose = 'world' if protocol.name == 'training' else 'enroll' if protocol.name == 'gallery' else 'probe'
 
     # replace the "\" with "/" to obtain the path
     path = os.path.join(*image_path.split("\\"))

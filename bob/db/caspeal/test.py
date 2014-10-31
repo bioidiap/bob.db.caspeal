@@ -78,7 +78,7 @@ def test_objects():
   assert len(db.objects(groups='world', poses='D+45')) == 0
 
   # enroll files are independent from the protocol
-  assert len(db.objects(groups='dev', purposes='enrol')) == 1040
+  assert len(db.objects(groups='dev', purposes='enroll')) == 1040
 
   # probe files, see description of the database
   assert len(db.objects(groups='dev', purposes='probe', protocol='accessory')) == 2285
@@ -118,7 +118,7 @@ def test_driver_api():
   # Tests the bob_dbmanage.py driver interface
   from bob.db.base.script.dbmanage import main
   assert main('caspeal dumplist --self-test'.split()) == 0
-  assert main('caspeal dumplist  --group=dev --purpose=enrol --client=622 --protocol=aging --session=0 --gender=F --expression=N --lighting=EU+00 --pose=M+00 --distance=0 --accessory=0 --age=Y --background=B --self-test'.split()) == 0
+  assert main('caspeal dumplist  --group=dev --purpose=enroll --client=622 --protocol=aging --session=0 --gender=F --expression=N --lighting=EU+00 --pose=M+00 --distance=0 --accessory=0 --age=Y --background=B --self-test'.split()) == 0
   assert main('caspeal checkfiles --self-test'.split()) == 0
   assert main('caspeal reverse FRONTAL/Aging/MY_000064_IEU+00_PM+00_EN_A0_D0_T2_BB_M0_R1_S0 --self-test'.split()) == 0
   assert main('caspeal path 42 --self-test'.split()) == 0
