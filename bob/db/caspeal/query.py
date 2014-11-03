@@ -314,15 +314,11 @@ class Database(bob.db.verification.utils.SQLiteDatabase):
     return [file for query in queries for file in query]
 
 
-  def annotations(self, file_id):
+  def annotations(self, file):
     """Returns the annotations for the given file id as a dictionary {'reye':(y,x), 'leye':(y,x)}."""
-    # query the annotations
-    query = self.query(Annotation).join(File).filter(File.id==file_id)
-    assert query.count() == 1
-    annotation = query.first()
-
+    self.assert_validity()
     # return annotations as obtained from the __call__ command of the Annotation class
-    return annotation()
+    return file.annotation()
 
 
   def protocol_names(self):

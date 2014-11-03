@@ -108,7 +108,7 @@ def test_annotations():
     files = db.objects(protocol=protocol)
     # ...and some of the files
     for file in random.sample(files, 1000):
-      annotations = db.annotations(file.id)
+      annotations = db.annotations(file)
       assert 'leye' in annotations and 'reye' in annotations
       assert len(annotations['leye']) == 2
       assert len(annotations['reye']) == 2
