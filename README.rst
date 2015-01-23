@@ -6,7 +6,7 @@
    :target: http://pythonhosted.org/bob.db.caspeal/index.html
 .. image:: http://img.shields.io/badge/docs-latest-orange.png
    :target: https://www.idiap.ch/software/bob/docs/latest/bioidiap/bob.db.caspeal/master/index.html
-.. image:: https://travis-ci.org/bioidiap/bob.db.caspeal.svg?branch=v2.0.1
+.. image:: https://travis-ci.org/bioidiap/bob.db.caspeal.svg?branch=master
    :target: https://travis-ci.org/bioidiap/bob.db.caspeal
 .. image:: https://coveralls.io/repos/bioidiap/bob.db.caspeal/badge.png
    :target: https://coveralls.io/r/bioidiap/bob.db.caspeal
