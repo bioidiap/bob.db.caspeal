@@ -32,7 +32,7 @@ We do not provide the ``'pose'`` protocol (yet) since the training set of the `C
 The Database Interface
 ----------------------
 
-The :py:class:`bob.db.caspeal.Database` complies with the standard biometric verification database as described in :ref:`commons`, implementing the interface :py:class:`bob.db.verification.utils.SQLiteDatabase`.
+The :py:class:`bob.db.caspeal.Database` complies with the standard biometric verification database as described in :ref:`commons`, implementing the interface :py:class:`bob.db.base.SQLiteDatabase`.
 
 .. todo::
    Explain the particularities of the :py:class:`bob.db.caspeal.Database` database.
