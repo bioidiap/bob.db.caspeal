@@ -9,9 +9,9 @@
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal
-.. image:: http://img.shields.io/pypi/v/bob.db.caspeal.png
+.. image:: http://img.shields.io/pypi/v/bob.db.caspeal.svg
    :target: https://pypi.python.org/pypi/bob.db.caspeal
-.. image:: http://img.shields.io/pypi/dm/bob.db.caspeal.png
+.. image:: http://img.shields.io/pypi/dm/bob.db.caspeal.svg
    :target: https://pypi.python.org/pypi/bob.db.caspeal
 
 
@@ -44,6 +44,6 @@ development `mailing list`_.
 
 .. Place your references here:
 .. _bob: https://www.idiap.ch/software/bob
-.. _installation: https://gitlab.idiap.ch/bob/bob/wikis/Installation
+.. _installation: https://www.idiap.ch/software/bob/install
 .. _mailing list: https://groups.google.com/forum/?fromgroups#!forum/bob-devel
 .. _cas-peal: http://www.jdl.ac.cn/peal
