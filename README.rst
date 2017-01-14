@@ -1,9 +1,9 @@
 .. vim: set fileencoding=utf-8 :
 .. Thu 18 Aug 14:47:00 CEST 2016
 
-.. image:: http://img.shields.io/badge/docs-stable-yellow.png
+.. image:: http://img.shields.io/badge/docs-stable-yellow.svg
    :target: http://pythonhosted.org/bob.db.caspeal/index.html
-.. image:: http://img.shields.io/badge/docs-latest-orange.png
+.. image:: http://img.shields.io/badge/docs-latest-orange.svg
    :target: https://www.idiap.ch/software/bob/docs/latest/bob/bob.db.caspeal/master/index.html
 .. image:: https://gitlab.idiap.ch/bob/bob.db.caspeal/badges/master/build.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/master
