@@ -159,7 +159,8 @@ class File(Base, bob.db.base.File):
     # client id
     client_id = int(splits[1])
     # call base class constructor
-    bob.db.base.File.__init__(self, client_id = client_id, path = path)
+    bob.db.base.File.__init__(self, path = path)
+    self.client_id = client_id
 
     # lighting
     assert splits[2][0] == 'I'
