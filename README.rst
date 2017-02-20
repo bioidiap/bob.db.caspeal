@@ -5,8 +5,8 @@
    :target: http://pythonhosted.org/bob.db.caspeal/index.html
 .. image:: http://img.shields.io/badge/docs-latest-orange.svg
    :target: https://www.idiap.ch/software/bob/docs/latest/bob/bob.db.caspeal/master/index.html
-.. image:: https://gitlab.idiap.ch/bob/bob.db.caspeal/badges/v2.1.2/build.svg
-   :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/v2.1.2
+.. image:: https://gitlab.idiap.ch/bob/bob.db.caspeal/badges/master/build.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal
 .. image:: http://img.shields.io/pypi/v/bob.db.caspeal.svg
