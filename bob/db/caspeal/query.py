@@ -30,6 +30,7 @@ import bob.db.base
 
 SQLITE_FILE = Interface().files()[0]
 
+
 class Database(bob.db.base.SQLiteDatabase):
   """The database class opens and maintains a connection opened to the Database.
 
@@ -37,14 +38,13 @@ class Database(bob.db.base.SQLiteDatabase):
   and for the data itself inside the database.
   """
 
-  def __init__(self, original_directory = None, original_extension = '.tif'):
+  def __init__(self, original_directory=None, original_extension='.tif'):
     # call base class constructor
-    super(Database, self).__init__(SQLITE_FILE, File)
-    self.original_directory = original_directory
-    self.original_extension = original_extension
+    super(Database, self).__init__(SQLITE_FILE, File,
+                                   original_directory, original_extension)
 
     # defines valid entries for various parameters
-    self.m_groups  = ('world', 'dev') # no eval
+    self.m_groups = ('world', 'dev')  # no eval
     self.m_purposes = ('enroll', 'probe')
     self.m_genders = Client.gender_choices
     self.m_ages = Client.age_choices
@@ -93,7 +93,8 @@ class Database(bob.db.base.SQLiteDatabase):
     """
 
     groups = self.check_parameters_for_validity(groups, "group", self.m_groups)
-    genders = self.check_parameters_for_validity(genders, "gender", self.m_genders)
+    genders = self.check_parameters_for_validity(
+        genders, "gender", self.m_genders)
     ages = self.check_parameters_for_validity(ages, "age range", self.m_ages)
 
     query = self.query(Client)\
@@ -105,7 +106,6 @@ class Database(bob.db.base.SQLiteDatabase):
       query = query.join(File).filter(File.purpose == 'world')
 
     return [client for client in query]
-
 
   def client_ids(self, groups=None, genders=None, ages=None, protocol=None):
     """Returns a list of client ids for the specific query by the user.
@@ -132,10 +132,8 @@ class Database(bob.db.base.SQLiteDatabase):
 
     return [client.id for client in self.clients(groups, genders, ages, protocol)]
 
-
   # model_ids() and client_ids() functions are identical
   model_ids = client_ids
-
 
   def get_client_id_from_file_id(self, file_id, **kwargs):
     """Returns the client_id attached to the given file_id
@@ -153,7 +151,6 @@ class Database(bob.db.base.SQLiteDatabase):
     assert q.count() == 1
     return q.first().client_id
 
-
   def get_client_id_from_model_id(self, model_id):
     """Returns the client_id attached to the given model_id
 
@@ -166,7 +163,6 @@ class Database(bob.db.base.SQLiteDatabase):
     """
     # client ids and model ids are identical...
     return model_id
-
 
   def objects(self, groups=None, protocol=None, purposes=None, model_ids=None, genders=None, ages=None, lightings=None, poses=None, expressions=None, accessories=None, distances=None, sessions=None, backgrounds=None):
     """Using the specified restrictions, this function returns a list of File objects.
@@ -241,17 +237,26 @@ class Database(bob.db.base.SQLiteDatabase):
 
     # check that every parameter is as expected
     groups = self.check_parameters_for_validity(groups, "group", self.m_groups)
-    protocols = self.check_parameters_for_validity(protocol, "protocol", self.m_protocols)
-    purposes = self.check_parameters_for_validity(purposes, "purpose", self.m_purposes)
-    genders = self.check_parameters_for_validity(genders, "gender", self.m_genders)
+    protocols = self.check_parameters_for_validity(
+        protocol, "protocol", self.m_protocols)
+    purposes = self.check_parameters_for_validity(
+        purposes, "purpose", self.m_purposes)
+    genders = self.check_parameters_for_validity(
+        genders, "gender", self.m_genders)
     ages = self.check_parameters_for_validity(ages, "age range", self.m_ages)
-    lightings = self.check_parameters_for_validity(lightings, "lighting", self.m_lightings)
+    lightings = self.check_parameters_for_validity(
+        lightings, "lighting", self.m_lightings)
     poses = self.check_parameters_for_validity(poses, "pose", self.m_poses)
-    expressions = self.check_parameters_for_validity(expressions, "expression", self.m_expressions)
-    accessories = self.check_parameters_for_validity(accessories, "accessory", self.m_accessories)
-    distances = self.check_parameters_for_validity(distances, "distance", self.m_distances)
-    sessions = self.check_parameters_for_validity(sessions, "session", self.m_sessions)
-    backgrounds = self.check_parameters_for_validity(backgrounds, "background", self.m_backgrounds)
+    expressions = self.check_parameters_for_validity(
+        expressions, "expression", self.m_expressions)
+    accessories = self.check_parameters_for_validity(
+        accessories, "accessory", self.m_accessories)
+    distances = self.check_parameters_for_validity(
+        distances, "distance", self.m_distances)
+    sessions = self.check_parameters_for_validity(
+        sessions, "session", self.m_sessions)
+    backgrounds = self.check_parameters_for_validity(
+        backgrounds, "background", self.m_backgrounds)
 
     # assure that the given model ids are in an iteratable container
     if isinstance(model_ids, int):
@@ -265,13 +270,13 @@ class Database(bob.db.base.SQLiteDatabase):
     def _filter_all(query):
       # filter all information
       return _filter_some(query)\
-                .filter(File.lighting.in_(lightings))\
-                .filter(File.pose.in_(poses))\
-                .filter(File.expression.in_(expressions))\
-                .filter(File.accessory.in_(accessories))\
-                .filter(File.distance.in_(distances))\
-                .filter(File.session.in_(sessions))\
-                .filter(File.background.in_(backgrounds))
+          .filter(File.lighting.in_(lightings))\
+          .filter(File.pose.in_(poses))\
+          .filter(File.expression.in_(expressions))\
+          .filter(File.accessory.in_(accessories))\
+          .filter(File.distance.in_(distances))\
+          .filter(File.session.in_(sessions))\
+          .filter(File.background.in_(backgrounds))
 
     def _filter_models(query):
       # filter out the requested models
@@ -279,62 +284,56 @@ class Database(bob.db.base.SQLiteDatabase):
         query = query.filter(Client.id.in_(model_ids))
       return query
 
-
     # collect the queries
     queries = []
     if 'world' in groups:
       queries.append(
-        _filter_models(
-          _filter_all(
-            self.query(File).join(Client)\
-                .filter(File.purpose == 'world')\
+          _filter_models(
+              _filter_all(
+                  self.query(File).join(Client)
+                  .filter(File.purpose == 'world')
+              )
           )
-        )
       )
 
     if 'dev' in groups:
       if 'enroll' in purposes:
         queries.append(
-          _filter_models(
-            _filter_some(
-              self.query(File).join(Client)\
-                  .filter(File.purpose == 'enroll')\
+            _filter_models(
+                _filter_some(
+                    self.query(File).join(Client)
+                    .filter(File.purpose == 'enroll')
+                )
             )
-          )
         )
 
       if 'probe' in purposes:
         queries.append(
-          _filter_all(
-            self.query(File).join(Client).join(Protocol)\
-                .filter(File.purpose == 'probe')\
+            _filter_all(
+                self.query(File).join(Client).join(Protocol)
+                .filter(File.purpose == 'probe')
                 .filter(Protocol.name.in_(protocols))
-          )
+            )
         )
 
     # we have collected all queries, now extract the File objects
     return [file for query in queries for file in query]
 
-
   def annotations(self, file):
     """Returns the annotations for the given file id as a dictionary {'reye':(y,x), 'leye':(y,x)}."""
     self.assert_validity()
-    # return annotations as obtained from the __call__ command of the Annotation class
+    # return annotations as obtained from the __call__ command of the
+    # Annotation class
     return file.annotation()
-
 
   def protocol_names(self):
     """Returns all registered protocol names"""
     return [str(p.name) for p in self.protocols()]
 
-
   def protocols(self):
     """Returns all registered protocols"""
     return list(self.query(Protocol))
 
-
   def has_protocol(self, name):
     """Tells if a certain protocol is available"""
-    return self.query(Protocol).filter(Protocol.name==name).count() != 0
-
-
+    return self.query(Protocol).filter(Protocol.name == name).count() != 0
