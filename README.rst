@@ -7,6 +7,8 @@
    :target: https://www.idiap.ch/software/bob/docs/latest/bob/bob.db.caspeal/master/index.html
 .. image:: https://gitlab.idiap.ch/bob/bob.db.caspeal/badges/master/build.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/master
+.. image:: https://gitlab.idiap.ch/bob/bob.db.caspeal/badges/master/coverage.svg
+   :target: https://gitlab.idiap.ch/bob/bob.db.caspeal/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.db.caspeal
 .. image:: http://img.shields.io/pypi/v/bob.db.caspeal.svg
@@ -28,11 +30,10 @@ It worth noting that this package does not contain the original `CAS-PEAL`_ data
 Installation
 ------------
 
-Follow our `installation`_ instructions. Then, using the Python interpreter
-provided by the distribution, bootstrap and buildout this package::
+Complete Bob's `installation`_ instructions. Then, to install this pacakge,
+run::
 
-  $ python bootstrap-buildout.py
-  $ ./bin/buildout
+  $ conda install bob.db.caspeal
 
 
 Contact
